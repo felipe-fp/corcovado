@@ -56,6 +56,9 @@ SVARModel <- SVAR(Model, Amat = amat)
 summary(SVARModel)
 fevd(SVARModel)
 
+Phi(SVARModel)
+A = SVARModel
+
 SVARplot <- irf(SVARModel, impulse = 'MktCap', response = 'infl')
 SVARplot
 plot(SVARplot)
@@ -68,3 +71,11 @@ plot(SVARM2)
 
 SVARM2V <- irf(SVARModel, impulse = 'M2V', response = 'infl')
 plot(SVARM2V)
+
+
+### Regression model analysis
+
+model1 = lm(inflation ~ M2 + GDP + M2V, data = data)
+model2 = lm(inflation ~ M2 + GDP + M2V + MktCap, data = data)
+
+anova(model1, model2)
